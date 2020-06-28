@@ -1,0 +1,23 @@
+@startuml
+header haibo.yang
+footer 短链平台-用户交互图
+
+'定义组件
+actor 用户 as user
+actor 管理人员 as admin
+database 短链存储 as db
+usecase 短链平台 as 短链平台
+
+'配置阶段
+admin -down-> (短链平台) : 1. 请求生成短链
+(短链平台) --> (短链平台) : 2. 生成短链
+
+(短链平台) -down-> db : 3. 存储长短链映射关系
+
+'用户访问
+user -down-> (短链平台) : 4. 访问短链
+(短链平台) -down-> db : 5. 匹配长链
+(短链平台) -up-> user : 6. 返回302
+user -down-> (长链网站) : 7. 重定向
+
+@enduml
