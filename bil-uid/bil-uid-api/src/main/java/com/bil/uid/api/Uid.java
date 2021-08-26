@@ -26,6 +26,11 @@ public interface Uid {
 
     Integer getVersion();
 
+    /**
+     * 业务编码
+     *
+     * @return
+     */
     Integer getBizCode();
 
 }
