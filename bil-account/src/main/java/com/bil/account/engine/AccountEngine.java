@@ -2,13 +2,15 @@ package com.bil.account.engine;
 
 import com.bil.account.contants.AccountConstants;
 import com.bil.account.contants.VoucherType;
+import com.bil.account.dao.AccountCommandRepository;
 import com.bil.account.dao.AccountFlowRepository;
 import com.bil.account.dao.AccountRepository;
 import com.bil.account.dao.AccountVoucherRepository;
 import com.bil.account.model.entity.Account;
+import com.bil.account.model.entity.AccountCommand;
 import com.bil.account.model.entity.AccountFlow;
 import com.bil.account.model.entity.AccountVoucher;
-import com.bil.account.model.param.TransferAccountReq;
+import com.bil.account.model.param.AccountTransferReq;
 import com.bil.account.service.OrderNoService;
 import com.bil.account.utils.AccountUtil;
 import com.google.common.collect.Lists;
@@ -28,6 +30,8 @@ import javax.annotation.Resource;
 @Component
 public class AccountEngine {
 
+    private static final String VERSION = "1";
+
     @Resource
     private AccountRepository accountRepository;
     @Resource
@@ -35,7 +39,7 @@ public class AccountEngine {
     @Resource
     private AccountVoucherRepository accountVoucherRepository;
     @Resource
-    private OrderNoService orderNoService;
+    private AccountCommandRepository accountCommandRepository;
 
     /**
      * 查询账户
@@ -68,57 +72,73 @@ public class AccountEngine {
                 .objectNo(objectNo)
                 .version("1")
                 .build();
-        Account save = accountRepository.save(account);
-        return save;
+        return accountRepository.save(account);
     }
 
     /**
      * 转账
      *
-     * @param transferReq
+     * @param req
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public String transfer(TransferAccountReq transferReq) {
-        String voucherNo = orderNoService.generateOrderNo(VoucherType.ACCOUNT_VOUCHER);
-        String fromAccountNo = transferReq.getFromAccountNo();
-        String toAccountNo = transferReq.getToAccountNo();
-
+    public String transfer(AccountTransferReq req) {
+        //1. 参数校验
+        String fromAccountNo = req.getFromAccountNo();
+        String toAccountNo = req.getToAccountNo();
         AccountConstants.AccountType fromAccountType = AccountUtil.extractAccountType(fromAccountNo);
         Assert.notNull(fromAccountType, "转出账号类型类型不支持");
         AccountConstants.AccountType toAccountType = AccountUtil.extractAccountType(toAccountNo);
         Assert.notNull(toAccountType, "转入账号类型类型不支持");
-
-        String accountingCode = StringUtils.join(fromAccountType.getCode(), toAccountType.getCode());
-        AccountConstants.TransferType transferType = AccountConstants.TransferType.findByCode(transferReq.getTransferType());
+        AccountConstants.TransferType transferType = AccountConstants.TransferType.findByCode(req.getTransferType());
         Assert.notNull(transferType, "转账类型不支持");
 
+        //2. 查询转账指令表
+        AccountCommand command = accountCommandRepository
+                .findAccountCommandByCommandTradeNoAndCommandType(req.getTradeNo(), req.getCommandType());
+        if (null != command) {
+            return command.getCommandNo();
+        }
+
+        //3. 构建记账凭证
+        String commandNo = OrderNoService.$.generateOrderNo(VoucherType.ACCOUNT_VOUCHER);
+        command = AccountCommand.builder()
+                .commandNo(commandNo)
+                .commandType(req.getCommandType())
+                .commandTradeNo(req.getTradeNo())
+                .commandNote(req.getNote())
+                .version(VERSION)
+                .build();
+
+        String accountingCode = StringUtils.join(fromAccountType.getCode(), toAccountType.getCode());
         AccountVoucher voucher = AccountVoucher.builder()
-                .voucherNo(voucherNo)
+                .voucherNo(commandNo)
                 .fromAccountNo(fromAccountNo)
                 .toAccountNo(toAccountNo)
-                .amount(transferReq.getAmount())
+                .amount(req.getAmount())
                 .currency(AccountConstants.Currency.CNY.getCode())
                 .transferType(transferType.getCode())
-                .tradeNo(transferReq.getTradeNo())
-                .tradeTime(transferReq.getTradeTime())
-                .tradeType(transferReq.getTradeType())
+                .tradeNo(req.getTradeNo())
+                .tradeTime(req.getTradeTime())
+                .tradeType(req.getTradeType())
                 .accountingCode(accountingCode)
-                .resultCode("")
-                .resultNote("")
-                .version("1")
+                .resultCode("0000")
+                .resultNote("记账成功")
+                .version(VERSION)
                 .build();
-        //1. 更新余额
-        Long fromAmount = calcTransferAmount(transferReq.getAmount(), fromAccountType, true);
-        Long toAmount = calcTransferAmount(transferReq.getAmount(), toAccountType, false);
+        //4. 更新余额
+        Long fromAmount = calcTransferAmount(req.getAmount(), fromAccountType, true);
+        Long toAmount = calcTransferAmount(req.getAmount(), toAccountType, false);
         updateBalance(fromAmount, fromAccountNo);
         updateBalance(toAmount, toAccountNo);
-        //2. 构建账务流水
-        AccountFlow fromAccountFlow = buildAccountFlow(fromAccountNo, toAccountNo, true, fromAmount, voucherNo);
-        AccountFlow toAccountFlow = buildAccountFlow(toAccountNo, fromAccountNo, false, toAmount, voucherNo);
+        //5. 记账务流水
+        AccountFlow fromAccountFlow = buildAccountFlow(fromAccountNo, toAccountNo, true, fromAmount, commandNo);
+        AccountFlow toAccountFlow = buildAccountFlow(toAccountNo, fromAccountNo, false, toAmount, commandNo);
         accountFlowRepository.saveAll(Lists.newArrayList(fromAccountFlow, toAccountFlow));
-        //3. 保存账务凭证
+        //6. 记账务凭证
         AccountVoucher saveVoucher = accountVoucherRepository.save(voucher);
+        //7. 记记账指令
+        accountCommandRepository.save(command);
         return saveVoucher.getVoucherNo();
 
     }

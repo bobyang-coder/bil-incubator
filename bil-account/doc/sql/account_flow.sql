@@ -1,4 +1,4 @@
-create table `account_flow`
+create table if not exists `account_flow`
 (
     `id`                  bigint auto_increment               not null comment '主键'
         primary key,
@@ -9,6 +9,7 @@ create table `account_flow`
     `credit_amount`       bigint                              not null comment '贷记金额',
     `debit_amount`        bigint                              not null comment '借记金额',
     `opposite_account_no` varchar(30)                         not null comment '对端账户号',
+    `update_time`         timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '修改时间',
     `create_time`         timestamp default CURRENT_TIMESTAMP not null comment '创建时间',
     `version`             varchar(10)                         not null comment '版本号',
     unique key `uniq_voucher_no_account_no` (`voucher_no`, `account_no`)

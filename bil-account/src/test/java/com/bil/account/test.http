@@ -1,0 +1,25 @@
+###
+GET http://localhost:8888/account/find-account?accountNo=110110001
+
+###
+GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=310001
+
+###
+GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=410001
+
+
+###
+POST http://localhost:8888/account/transfer-account
+Content-Type: application/json
+
+{
+  "fromAccountNo": "110410001",
+  "toAccountNo": "110310001",
+  "amount": 100,
+  "transferType": "3",
+  "commandType": "from-to",
+  "tradeNo": "bob-test-001",
+  "tradeTime": 1637421614684,
+  "tradeType": "pay",
+  "note": "test"
+}

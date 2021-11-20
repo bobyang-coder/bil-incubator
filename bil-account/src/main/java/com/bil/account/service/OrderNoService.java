@@ -3,6 +3,7 @@ package com.bil.account.service;
 import com.bil.account.contants.VoucherType;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -15,6 +16,12 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class OrderNoService {
 
+    public static OrderNoService $;
+
+    @Resource
+    public void inject(OrderNoService orderNoService) {
+        $ = orderNoService;
+    }
 
     public String generateOrderNo(VoucherType voucherType) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));

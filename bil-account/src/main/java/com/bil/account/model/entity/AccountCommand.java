@@ -9,17 +9,18 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 账务流水表
+ * 记账指令表
  *
- * @author bob
+ * @author haibo.yang
+ * @since 2021/11/21
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "account_flow")
-public class AccountFlow {
+@Table(name = "account_command")
+public class AccountCommand {
 
     /**
      * 主键
@@ -30,46 +31,28 @@ public class AccountFlow {
     private Long id;
 
     /**
-     * 凭证号
+     * 记账指令号
      */
-    @Column(name = "voucher_no")
-    private String voucherNo;
+    @Column(name = "command_no")
+    private String commandNo;
 
     /**
-     * 账户号
+     * 记账交易号
      */
-    @Column(name = "account_no")
-    private String accountNo;
+    @Column(name = "command_trade_no")
+    private String commandTradeNo;
 
     /**
-     * 本期余额
+     * 记账指令类型
      */
-    @Column(name = "balance")
-    private Long balance;
-
+    @Column(name = "command_type")
+    private String commandType;
     /**
-     * 期初余额
+     * 记账指令备注
      */
-    @Column(name = "prefix_balance")
-    private Long prefixBalance;
+    @Column(name = "command_note")
+    private String commandNote;
 
-    /**
-     * 贷记金额
-     */
-    @Column(name = "credit_amount")
-    private Long creditAmount;
-
-    /**
-     * 借记金额
-     */
-    @Column(name = "debit_amount")
-    private Long debitAmount;
-
-    /**
-     * 对端账户号
-     */
-    @Column(name = "opposite_account_no")
-    private String oppositeAccountNo;
 
     /**
      * 修改时间
@@ -88,5 +71,4 @@ public class AccountFlow {
      */
     @Column(name = "version")
     private String version;
-
 }

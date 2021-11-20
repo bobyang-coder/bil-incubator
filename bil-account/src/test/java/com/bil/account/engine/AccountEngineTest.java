@@ -3,7 +3,7 @@ package com.bil.account.engine;
 import com.bil.account.ApplicationTests;
 import com.bil.account.contants.AccountConstants;
 import com.bil.account.model.entity.Account;
-import com.bil.account.model.param.TransferAccountReq;
+import com.bil.account.model.param.AccountTransferReq;
 import org.junit.Assert;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ class AccountEngineTest extends ApplicationTests {
     @Test
     @Order(3)
     public void transferSalary() {
-        TransferAccountReq req = TransferAccountReq.builder()
+        AccountTransferReq req = AccountTransferReq.builder()
                 .fromAccountNo("110410001")
                 .toAccountNo("110110001")
                 .amount(88L)
@@ -58,7 +58,7 @@ class AccountEngineTest extends ApplicationTests {
         String voucherNo = accountEngine.transfer(req);
         Assert.assertNotNull(voucherNo);
 
-        TransferAccountReq req2 = TransferAccountReq.builder()
+        AccountTransferReq req2 = AccountTransferReq.builder()
                 .fromAccountNo("120410001")
                 .toAccountNo("120110001")
                 .amount(88L)
@@ -74,7 +74,7 @@ class AccountEngineTest extends ApplicationTests {
     @Test
     @Order(4)
     public void transfer() {
-        TransferAccountReq req = TransferAccountReq.builder()
+        AccountTransferReq req = AccountTransferReq.builder()
                 .fromAccountNo("110110001")
                 .toAccountNo("120110001")
                 .amount(10L)

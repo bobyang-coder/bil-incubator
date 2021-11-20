@@ -151,6 +151,7 @@ public interface AccountConstants {
         Withdraw("2", "提现"),
         Transfer("3", "转账"),
         Withhold("4", "代扣"),
+        Wages("5", "工资"),
         ;
 
         private String code;

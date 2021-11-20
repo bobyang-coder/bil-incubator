@@ -29,7 +29,7 @@ public class TimeOffsetGenerator {
         long offset = now - START;
         System.out.println(offset);
         //22位：6位业务前缀+11位时间差+5位序号  10w/s
-        return bizCode + "" + offset + "11111";
+        return String.format("%s%s%s", bizCode, offset, "11111");
     }
 
     public LocalDateTime getLocalDate(String uid) {

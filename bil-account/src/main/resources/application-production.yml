@@ -1,0 +1,11 @@
+spring:
+  # 数据源配置
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/bil-account?serverTimezone=GMT%2B8&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true

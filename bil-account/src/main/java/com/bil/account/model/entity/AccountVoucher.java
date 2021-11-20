@@ -21,96 +21,102 @@ import java.util.Date;
 @Table(name = "account_voucher")
 public class AccountVoucher {
 
-	/**
-	 * 主键
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Long id;
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-	/**
-	 * 记账凭证号
-	 */
-	@Column(name = "voucher_no")
-	private String voucherNo;
+    /**
+     * 记账凭证号
+     */
+    @Column(name = "voucher_no")
+    private String voucherNo;
 
-	/**
-	 * 转出账户号
-	 */
-	@Column(name = "from_account_no")
-	private String fromAccountNo;
+    /**
+     * 转出账户号
+     */
+    @Column(name = "from_account_no")
+    private String fromAccountNo;
 
-	/**
-	 * 转入账户号
-	 */
-	@Column(name = "to_account_no")
-	private String toAccountNo;
+    /**
+     * 转入账户号
+     */
+    @Column(name = "to_account_no")
+    private String toAccountNo;
 
-	/**
-	 * 交易金额
-	 */
-	@Column(name = "amount")
-	private Long amount;
+    /**
+     * 交易金额
+     */
+    @Column(name = "amount")
+    private Long amount;
 
-	/**
-	 * 币种
-	 */
-	@Column(name = "currency")
-	private String currency;
+    /**
+     * 币种
+     */
+    @Column(name = "currency")
+    private String currency;
 
-	/**
-	 * 转账类型
-	 */
-	@Column(name = "transfer_type")
-	private String transferType;
+    /**
+     * 转账类型
+     */
+    @Column(name = "transfer_type")
+    private String transferType;
 
-	/**
-	 * 交易流水号
-	 */
-	@Column(name = "trade_no")
-	private String tradeNo;
+    /**
+     * 交易流水号
+     */
+    @Column(name = "trade_no")
+    private String tradeNo;
 
-	/**
-	 * 交易时间
-	 */
-	@Column(name = "trade_time")
-	private Date tradeTime;
+    /**
+     * 交易时间
+     */
+    @Column(name = "trade_time")
+    private Date tradeTime;
 
-	/**
-	 * 交易类型
-	 */
-	@Column(name = "trade_type")
-	private String tradeType;
+    /**
+     * 交易类型
+     */
+    @Column(name = "trade_type")
+    private String tradeType;
 
-	/**
-	 * 记账码
-	 */
-	@Column(name = "accounting_code")
-	private String accountingCode;
+    /**
+     * 记账码
+     */
+    @Column(name = "accounting_code")
+    private String accountingCode;
 
-	/**
-	 * 结果码
-	 */
-	@Column(name = "result_code")
-	private String resultCode;
+    /**
+     * 结果码
+     */
+    @Column(name = "result_code")
+    private String resultCode;
 
-	/**
-	 * 结果备注
-	 */
-	@Column(name = "result_note")
-	private String resultNote;
+    /**
+     * 结果备注
+     */
+    @Column(name = "result_note")
+    private String resultNote;
 
-	/**
-	 * 创建时间
-	 */
-	@Column(name = "create_time")
-	private Date createTime;
+    /**
+     * 修改时间
+     */
+    @Column(name = "update_time")
+    private Date updateTime;
 
-	/**
-	 * 版本号
-	 */
-	@Column(name = "version")
-	private String version;
+    /**
+     * 创建时间
+     */
+    @Column(name = "create_time")
+    private Date createTime;
+
+    /**
+     * 版本号
+     */
+    @Column(name = "version")
+    private String version;
 
 }
