@@ -18,7 +18,7 @@ Content-Type: application/json
   "amount": 100,
   "transferType": "3",
   "commandType": "from-to",
-  "tradeNo": "bob-test-001",
+  "tradeNo": "bob-test-002",
   "tradeTime": 1637421614684,
   "tradeType": "pay",
   "note": "test"

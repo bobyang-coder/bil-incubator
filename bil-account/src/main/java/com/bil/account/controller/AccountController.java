@@ -1,7 +1,7 @@
 package com.bil.account.controller;
 
 import com.bil.account.engine.AccountEngine;
-import com.bil.account.model.base.Response;
+import com.bil.account.model.base.AccountResponse;
 import com.bil.account.model.entity.Account;
 import com.bil.account.model.param.AccountTransferReq;
 import io.swagger.annotations.Api;
@@ -26,20 +26,20 @@ public class AccountController {
 
     @ApiOperation("查询账户")
     @GetMapping("find-account")
-    public Response<Account> findAccount(@RequestParam("accountNo") String accountNo) {
-        return Response.success(accountEngine.findAccount(accountNo));
+    public AccountResponse<Account> findAccount(@RequestParam("accountNo") String accountNo) {
+        return AccountResponse.success(accountEngine.findAccount(accountNo));
     }
 
     @ApiOperation("开账户")
     @GetMapping("open-account")
-    public Response<Account> openAccount(@RequestParam("objectNo") String objectNo,
-                                         @RequestParam("accountTypeCode") int accountTypeCode) {
-        return Response.success(accountEngine.openAccount(objectNo, accountTypeCode));
+    public AccountResponse<Account> openAccount(@RequestParam("objectNo") String objectNo,
+                                                @RequestParam("accountTypeCode") int accountTypeCode) {
+        return AccountResponse.success(accountEngine.openAccount(objectNo, accountTypeCode));
     }
 
     @ApiOperation("账户转账")
     @PostMapping("transfer-account")
-    public Response<String> transfer(@RequestBody AccountTransferReq transferReq) {
-        return Response.success(accountEngine.transfer(transferReq));
+    public AccountResponse<String> transfer(@RequestBody AccountTransferReq transferReq) {
+        return AccountResponse.success(accountEngine.transfer(transferReq));
     }
 }

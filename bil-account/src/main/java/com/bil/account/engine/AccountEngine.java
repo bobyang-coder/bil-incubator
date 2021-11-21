@@ -11,7 +11,7 @@ import com.bil.account.model.entity.AccountCommand;
 import com.bil.account.model.entity.AccountFlow;
 import com.bil.account.model.entity.AccountVoucher;
 import com.bil.account.model.param.AccountTransferReq;
-import com.bil.account.service.OrderNoService;
+import com.bil.account.service.UidService;
 import com.bil.account.utils.AccountUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -58,8 +58,9 @@ public class AccountEngine {
     public Account openAccount(String objectNo, int accountTypeCode) {
         AccountConstants.AccountType accountType = AccountConstants.AccountType.findByCode(accountTypeCode);
         Assert.notNull(accountType, "账户类型不支持:" + accountTypeCode);
+        String accountNo = UidService.$.generateAccountNo(objectNo, accountType);
         Account account = Account.builder()
-                .accountNo(objectNo + accountType.getCode())
+                .accountNo(accountNo)
                 .accountName(accountType.getName())
                 .accountType(String.valueOf(accountType.getCode()))
                 .balance(0L)
@@ -101,7 +102,7 @@ public class AccountEngine {
         }
 
         //3. 构建记账凭证
-        String commandNo = OrderNoService.$.generateOrderNo(VoucherType.ACCOUNT_VOUCHER);
+        String commandNo = UidService.$.generateOrderNo(VoucherType.ACCOUNT_VOUCHER);
         command = AccountCommand.builder()
                 .commandNo(commandNo)
                 .commandType(req.getCommandType())

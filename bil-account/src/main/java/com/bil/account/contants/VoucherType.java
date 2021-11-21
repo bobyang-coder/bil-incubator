@@ -17,7 +17,8 @@ public enum VoucherType {
     /**
      * ......
      */
-    ACCOUNT_VOUCHER("110", "账务凭证"),
+    ACCOUNT_NO("100001", "账户号"),
+    ACCOUNT_VOUCHER("100002", "账务凭证"),
     ;
 
     private String code;
