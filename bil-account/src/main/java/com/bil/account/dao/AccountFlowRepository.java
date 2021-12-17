@@ -3,6 +3,8 @@ package com.bil.account.dao;
 import com.bil.account.model.entity.AccountFlow;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * 账户流水表
  *
@@ -10,5 +12,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 2021/08/23
  */
 public interface AccountFlowRepository extends JpaRepository<AccountFlow, Long> {
+
+    /**
+     * 根据账号查询流水
+     *
+     * @param accountNo
+     * @return
+     */
+    List<AccountFlow> queryByAccountNoOrderByIdDesc(String accountNo);
 
 }

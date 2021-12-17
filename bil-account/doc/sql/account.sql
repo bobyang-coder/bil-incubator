@@ -16,7 +16,8 @@ create table if not exists `account`
     `update_time`         timestamp                      default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '修改时间',
     `create_time`         timestamp                      default CURRENT_TIMESTAMP not null comment '创建时间',
     `version`             varchar(10)           not null comment '版本号',
-    unique key `uniq_account_no` (`account_no`)
+    unique key `uniq_account_no` (`account_no`),
+    index `idx_object_no` (`object_no`)
 )
     comment '账户表';
 

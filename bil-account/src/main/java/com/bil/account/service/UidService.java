@@ -2,11 +2,11 @@ package com.bil.account.service;
 
 import com.bil.account.contants.AccountConstants;
 import com.bil.account.contants.VoucherType;
+import com.bil.account.utils.Uid;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * 单号生成器
@@ -18,8 +18,6 @@ import java.time.format.DateTimeFormatter;
 public class UidService {
 
     public static UidService $;
-
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
     @Resource
     public void inject(UidService uidService) {
@@ -33,8 +31,7 @@ public class UidService {
      * @return
      */
     public String generateOrderNo(VoucherType voucherType) {
-        String timestamp = LocalDateTime.now().format(FORMATTER);
-        return voucherType.getCode() + timestamp;
+        return Uid.create(voucherType);
     }
 
     /**
@@ -45,6 +42,12 @@ public class UidService {
      * @return
      */
     public String generateAccountNo(String objectNo, AccountConstants.AccountType accountType) {
-        return VoucherType.ACCOUNT_NO + objectNo + accountType.getCode();
+        Assert.isTrue(objectNo.length() <= 12, "对象号大于12位");
+        objectNo = Uid.padLeft(objectNo, 12, "0");
+        return VoucherType.ACCOUNT_NO.getCode() + objectNo + accountType.getCode();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Math.floorDiv(1000,2));
     }
 }

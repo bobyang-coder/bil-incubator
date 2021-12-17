@@ -43,6 +43,12 @@ public class AccountCommand {
     private String commandTradeNo;
 
     /**
+     * 交易时间
+     */
+    @Column(name = "trade_time")
+    private Date tradeTime;
+
+    /**
      * 记账指令类型
      */
     @Column(name = "command_type")

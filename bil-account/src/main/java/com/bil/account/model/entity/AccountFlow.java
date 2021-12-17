@@ -36,6 +36,12 @@ public class AccountFlow {
     private String voucherNo;
 
     /**
+     * 交易时间
+     */
+    @Column(name = "trade_time")
+    private Date tradeTime;
+
+    /**
      * 账户号
      */
     @Column(name = "account_no")

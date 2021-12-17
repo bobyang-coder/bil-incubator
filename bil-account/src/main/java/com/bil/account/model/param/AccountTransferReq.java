@@ -1,5 +1,6 @@
 package com.bil.account.model.param;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -32,20 +33,30 @@ public class AccountTransferReq {
     private String transferType;
 
     @ApiModelProperty(name = "tradeTime", value = "交易时间", required = true)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date tradeTime;
 
     @ApiModelProperty(name = "tradeType", value = "交易类型", required = true)
     private String tradeType;
 
-    @ApiModelProperty(name = "fromAccountNo", value = "转出账户号", required = true)
-    private String fromAccountNo;
+    @ApiModelProperty(name = "fromObjectNo", value = "转出账户号", required = true)
+    private String fromObjectNo;
 
-    @ApiModelProperty(name = "toAccountNo", value = "转入账户号", required = true)
-    private String toAccountNo;
+    @ApiModelProperty(name = "fromAccountType", value = "转出账户类型", required = true)
+    private String fromAccountType;
+
+    @ApiModelProperty(name = "toObjectNo", value = "转入账户号", required = true)
+    private String toObjectNo;
+
+    @ApiModelProperty(name = "toAccountType", value = "转入账户类型", required = true)
+    private String toAccountType;
 
     @ApiModelProperty(name = "amount", value = "交易金额", required = true)
     private Long amount;
 
     @ApiModelProperty(name = "note", value = "备注")
     private String note;
+
+    @ApiModelProperty(name = "autoOpenAcc", value = "是否自动开户")
+    private Boolean autoOpenAcc;
 }

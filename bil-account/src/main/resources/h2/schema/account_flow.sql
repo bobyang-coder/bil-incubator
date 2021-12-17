@@ -3,6 +3,7 @@ create table if not exists `account_flow`
     `id`                  bigint auto_increment               not null comment '主键'
         primary key,
     `voucher_no`          varchar(255)                        not null comment '凭证号',
+    `trade_time`          datetime                            not null comment '交易时间',
     `account_no`          varchar(30)                         not null comment '账户号',
     `balance`             bigint                              not null comment '本期余额',
     `prefix_balance`      varchar(20)                         not null comment '期初余额',

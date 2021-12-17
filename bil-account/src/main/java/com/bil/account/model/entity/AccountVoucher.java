@@ -36,13 +36,25 @@ public class AccountVoucher {
     private String voucherNo;
 
     /**
-     * 转出账户号
+     * 借记对象号
+     */
+    @Column(name = "from_object_no")
+    private String fromObjectNo;
+
+    /**
+     * 借记账户号
      */
     @Column(name = "from_account_no")
     private String fromAccountNo;
 
     /**
-     * 转入账户号
+     * 贷记账户号
+     */
+    @Column(name = "to_object_no")
+    private String toObjectNo;
+
+    /**
+     * 贷记账户号
      */
     @Column(name = "to_account_no")
     private String toAccountNo;
@@ -100,6 +112,12 @@ public class AccountVoucher {
      */
     @Column(name = "result_note")
     private String resultNote;
+
+    /**
+     * 摘要内容
+     */
+    @Column(name = "abstract_content")
+    private String abstractContent;
 
     /**
      * 修改时间
