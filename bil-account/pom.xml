@@ -16,7 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <HikariCP.version>4.0.3</HikariCP.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <swagger2.version>2.9.2</swagger2.version>
         <mysql-driver.version>8.0.20</mysql-driver.version>
         <joda.version>2.10.10</joda.version>
