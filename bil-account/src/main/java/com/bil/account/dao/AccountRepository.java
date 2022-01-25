@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 /**
  * 账户表
  *
@@ -21,6 +23,14 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
      * @return
      */
     Account findByAccountNo(String accountNo);
+
+    /**
+     * 根据对象号查询
+     *
+     * @param objectNo
+     * @return
+     */
+    List<Account> queryByObjectNo(String objectNo);
 
     /**
      * 查询余额
@@ -40,4 +50,15 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Query("update Account set balance = balance - :amount  where accountNo = :accountNo and balance >= :amount")
     int subAmount(@Param("amount") Long amount, @Param("accountNo") String accountNo);
+
+    /**
+     * 减金额-支持负数
+     *
+     * @param amount
+     * @param accountNo
+     * @return
+     */
+    @Modifying
+    @Query("update Account set balance = balance - :amount  where accountNo = :accountNo")
+    int subAmountSupportNegative(@Param("amount") Long amount, @Param("accountNo") String accountNo);
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountResponse<T> {
+public class Response<T> {
 
     private static final String SUCCESS = "0";
     private static final String ERROR = "-1";
@@ -25,15 +25,15 @@ public class AccountResponse<T> {
     private T data;
 
 
-    public static <D> AccountResponse<D> success(D data) {
-        return AccountResponse.<D>builder()
+    public static <D> Response<D> success(D data) {
+        return Response.<D>builder()
                 .code(SUCCESS)
                 .data(data)
                 .build();
     }
 
-    public static AccountResponse<?> fail(String msg) {
-        return AccountResponse.builder()
+    public static Response<?> fail(String msg) {
+        return Response.builder()
                 .code(ERROR)
                 .msg(msg)
                 .build();

@@ -59,4 +59,7 @@ public class AccountTransferReq {
 
     @ApiModelProperty(name = "autoOpenAcc", value = "是否自动开户")
     private Boolean autoOpenAcc;
+
+    @ApiModelProperty(name = "canNegative", value = "是否能为负数")
+    private Boolean canNegative;
 }

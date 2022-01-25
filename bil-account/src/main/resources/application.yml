@@ -3,3 +3,8 @@ server:
 spring:
   profiles:
     active: dev-h2
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5

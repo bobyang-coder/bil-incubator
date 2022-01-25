@@ -1,6 +1,6 @@
 package com.bil.account.configuration;
 
-import com.bil.account.model.base.AccountResponse;
+import com.bil.account.model.base.Response;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public AccountResponse<?> defaultHandler(HttpServletRequest request, Exception exception) {
+    public Response<?> defaultHandler(HttpServletRequest request, Exception exception) {
         StringBuffer url = request.getRequestURL();
         log.error("请求url异常-url:{}", url, exception);
         if (exception instanceof MethodArgumentNotValidException
@@ -40,10 +40,10 @@ public class GlobalExceptionHandler {
                 || exception instanceof HttpRequestMethodNotSupportedException
                 || exception instanceof ServletRequestBindingException
                 || exception instanceof HttpMessageNotWritableException) {
-            return AccountResponse.fail(getParamErrorDetails(exception));
+            return Response.fail(getParamErrorDetails(exception));
         } else {
             exception.printStackTrace();
-            return AccountResponse.fail(exception.getMessage());
+            return Response.fail(exception.getMessage());
         }
     }
 

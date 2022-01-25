@@ -1,0 +1,150 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=line-marker
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+<!-- Uncomment this line if you want to dataTool extension
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/extension/dataTool.min.js"></script>
+-->
+<!-- Uncomment this line if you want to use gl extension
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+-->
+<!-- Uncomment this line if you want to echarts-stat extension
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+-->
+<!-- Uncomment this line if you want to use map
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/map/js/world.js"></script>
+-->
+<!-- Uncomment these two lines if you want to use bmap extension
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@{{version}}/dist/extension/bmap.min.js"></script>
+-->
+
+<script th:inline="javascript">
+
+    //画图方法
+    function drawChart(container, dateList, amountList, balanceList, accountTypeName) {
+        var option = {
+            title: {
+                text: '账户流水图-' + accountTypeName
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {},
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: dateList
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} 元'
+                }
+            },
+            series: [
+                {
+                    name: '交易额',
+                    type: 'line',
+                    data: amountList,
+                    markPoint: {
+                        data: [
+                            {type: 'max', name: 'Max'},
+                            {type: 'min', name: 'Min'}
+                        ]
+                    },
+                    markLine: {
+                        data: [{type: 'average', name: 'Avg'}]
+                    }
+                }, {
+                    name: '余额',
+                    type: 'bar',
+                    data: balanceList,
+                    markPoint: {
+                        data: [{name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}]
+                    },
+                    markLine: {
+                        data: [
+                            {type: 'average', name: 'Avg'},
+                            [
+                                {
+                                    symbol: 'none',
+                                    x: '90%',
+                                    yAxis: 'max'
+                                },
+                                {
+                                    symbol: 'circle',
+                                    label: {
+                                        position: 'start',
+                                        formatter: 'Max'
+                                    },
+                                    type: 'max',
+                                    name: '最高点'
+                                }
+                            ]
+                        ]
+                    }
+                }
+
+            ]
+        };
+
+        if (option && typeof option === 'object') {
+            var myChart = echarts.init(document.getElementById(container));
+            myChart.setOption(option);
+        }
+    }
+
+    //绘图
+    var dataList = JSON.parse([[${dataList}]]);
+    var divRowNum = 1;
+    let rootDiv = document.getElementById("container");
+    for (var i = 0; i < dataList.length; i++) {
+        var data = dataList[i];
+        var ele_div = document.createElement("div");
+        if (i % 2 === 0) {
+            //左 div
+            var div_id = "container-div-row-" + divRowNum + 'left'
+            ele_div.setAttribute("id", div_id);
+            ele_div.setAttribute("style", "height: 50%;float:left;width:49%;border:1px solid rgba(255,0,0,0.03)");
+            rootDiv.appendChild(ele_div);
+            drawChart(div_id, data.dateList, data.amountList, data.balanceList, data.accountTypeName);
+        } else {
+            //右 div
+            var div_id = "container-div-row-" + divRowNum + 'right'
+            ele_div.setAttribute("id", div_id);
+            ele_div.setAttribute("style", "height: 50%;float:right;width:49%;border:1px solid rgba(255,0,0,0.03)");
+            rootDiv.appendChild(ele_div);
+            drawChart(div_id, data.dateList, data.amountList, data.balanceList, data.accountTypeName);
+            //换一行div
+            divRowNum++;
+        }
+    }
+</script>
+</body>
+</html>
+    

@@ -74,8 +74,8 @@ public class AccountEngine {
                 .currency(AccountConstants.Currency.CNY.getCode())
                 .overdraft(AccountConstants.YesNo.YES.getCharValue())
                 .direction(accountType.getAccountingSubject().getDirection().getCode())
-                .accountingSubjects("1")
-                .accountLevel("1")
+                .accountingSubjects(accountType.getAccountingSubject().getCode())
+                .accountLevel(String.valueOf(accountType.getAccountingSubject().getLevel().getLevel()))
                 .status(AccountConstants.AccountStatus.NORMAL.getCode())
                 .objectNo(objectNo)
                 .version(VERSION)
@@ -115,7 +115,7 @@ public class AccountEngine {
                 .build();
 
         Long toAmount = calcTransferAmount(amount, accountType, false);
-        updateBalance(amount, accountNo);
+        updateBalance(amount, accountNo, false);
         return voucherNo;
     }
 
@@ -186,8 +186,8 @@ public class AccountEngine {
         //4. 更新余额
         Long fromAmount = calcTransferAmount(req.getAmount(), fromAccountType, false);
         Long toAmount = calcTransferAmount(req.getAmount(), toAccountType, true);
-        updateBalance(fromAmount, fromAccountNo);
-        updateBalance(toAmount, toAccountNo);
+        updateBalance(fromAmount, fromAccountNo, req.getCanNegative());
+        updateBalance(toAmount, toAccountNo, req.getCanNegative());
         //5. 记账务流水
         AccountFlow fromAccountFlow = buildAccountFlow(tradeTime, fromAccountNo, toAccountNo, false, fromAmount, commandNo);
         AccountFlow toAccountFlow = buildAccountFlow(tradeTime, toAccountNo, fromAccountNo, true, toAmount, commandNo);
@@ -217,10 +217,18 @@ public class AccountEngine {
     }
 
 
-    private void updateBalance(Long amount, String accountNo) {
-        int updateCount = amount > 0
-                ? accountRepository.addAmount(amount, accountNo)
-                : accountRepository.subAmount(-amount, accountNo);
+    private void updateBalance(Long amount, String accountNo, Boolean canNegative) {
+        int updateCount = 0;
+        if (amount > 0) {
+            // 加
+            updateCount = accountRepository.addAmount(amount, accountNo);
+        } else if (BooleanUtils.isTrue(canNegative)) {
+            // 减-可为负
+            updateCount = accountRepository.subAmountSupportNegative(-amount, accountNo);
+        } else {
+            // 减-不可为负
+            updateCount = accountRepository.subAmount(-amount, accountNo);
+        }
         Assert.isTrue(updateCount <= 1, "账号重复:" + accountNo);
         Assert.isTrue(updateCount == 1, "账号余额不足:" + accountNo);
     }

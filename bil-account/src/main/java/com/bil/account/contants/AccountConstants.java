@@ -33,6 +33,7 @@ public interface AccountConstants {
          */
         BANK_LOAD(210001, "银行贷款户", AccountingSubject.BANK_LOAN),
         PERSONAL_LOAD(210002, "个人借款户", AccountingSubject.PERSONAL_LOAD),
+        CMB_BANK_LOAD(210003, "招商银行贷款户", AccountingSubject.BANK_LOAN),
 
         /**
          * 所有者权益类账户
@@ -46,6 +47,9 @@ public interface AccountConstants {
         HOUSE_LOAN(410001, "房贷户", AccountingSubject.HOUSE_LOAN),
         CREDIT_CONSUMPTION(410002, "信用卡消费户", AccountingSubject.CREDIT_CONSUMPTION),
         GIFT_GIVING(410003, "送礼户", AccountingSubject.GIFT_GIVING),
+        CMB_CREDIT_CONSUMPTION(410004, "招商信用卡消费户", AccountingSubject.CREDIT_CONSUMPTION),
+        ROOM_CHARGE(410005, "房租户", AccountingSubject.HOUSE_RENT),
+        DAILY_EXPENSES(410006, "日常消费户", AccountingSubject.DAILY_EXPENSES),
 
         /**
          * 成本类账户
@@ -78,6 +82,8 @@ public interface AccountConstants {
                     .findFirst()
                     .orElse(null);
         }
+
+
     }
 
     /**
@@ -115,10 +121,10 @@ public interface AccountConstants {
         /**
          * 三级科目
          */
-        PERSONAL_CASH("1001001", "个人现金", AccountingLevel.L3, LOAN, Direction.D),
-        BANK_DEPOSIT("1002001", "银行存款", AccountingLevel.L3, LOAN, Direction.D),
-        LICAI_FUND("1003001", "基金理财", AccountingLevel.L3, LOAN, Direction.D),
-        FIXED_ASSET_HOUSE("1003001", "房屋", AccountingLevel.L3, LOAN, Direction.D),
+        PERSONAL_CASH("1001001", "个人现金", AccountingLevel.L3, DEPOSIT, Direction.D),
+        BANK_DEPOSIT("1002001", "银行存款", AccountingLevel.L3, DEPOSIT, Direction.D),
+        LICAI_FUND("1003001", "基金理财", AccountingLevel.L3, LICAI, Direction.D),
+        FIXED_ASSET_HOUSE("1003001", "房屋", AccountingLevel.L3, FIXED_ASSET, Direction.D),
         BANK_LOAN("2001001", "借款-银行贷款", AccountingLevel.L3, LOAN, Direction.C),
         PERSONAL_LOAD("2001002", "借款-向个人借款", AccountingLevel.L3, LOAN, Direction.C),
         SALARY("3001001", "收入-工资", AccountingLevel.L3, INCOME, Direction.C),
@@ -127,6 +133,7 @@ public interface AccountConstants {
         CREDIT_CONSUMPTION("4001002", "支出-信用卡消费", AccountingLevel.L3, EXPENDITURE, Direction.D),
         GIFT_GIVING("4001003", "支出-送礼", AccountingLevel.L3, EXPENDITURE, Direction.D),
         HOUSE_RENT("4001004", "支出-房租", AccountingLevel.L3, EXPENDITURE, Direction.D),
+        DAILY_EXPENSES("4001005", "支出-日常消费", AccountingLevel.L3, EXPENDITURE, Direction.D),
 
         ;
 
@@ -163,6 +170,18 @@ public interface AccountConstants {
             this.level = level;
             this.parent = parent;
             this.direction = direction;
+        }
+
+        /**
+         * 获取顶级科目
+         *
+         * @return
+         */
+        public AccountingSubject getRootAccountingSubject() {
+            if (level != AccountingLevel.L1) {
+                return parent.getRootAccountingSubject();
+            }
+            return this;
         }
     }
 

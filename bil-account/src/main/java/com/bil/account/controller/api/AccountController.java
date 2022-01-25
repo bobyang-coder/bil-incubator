@@ -1,7 +1,7 @@
-package com.bil.account.controller;
+package com.bil.account.controller.api;
 
 import com.bil.account.engine.AccountEngine;
-import com.bil.account.model.base.AccountResponse;
+import com.bil.account.model.base.Response;
 import com.bil.account.model.entity.Account;
 import com.bil.account.model.entity.AccountFlow;
 import com.bil.account.model.param.AccountTransferReq;
@@ -31,26 +31,26 @@ public class AccountController {
 
     @ApiOperation("查询账户")
     @GetMapping("find-account")
-    public AccountResponse<Account> findAccount(@RequestParam("accountNo") String accountNo) {
-        return AccountResponse.success(accountEngine.findAccount(accountNo));
+    public Response<Account> findAccount(@RequestParam("accountNo") String accountNo) {
+        return Response.success(accountEngine.findAccount(accountNo));
     }
 
     @ApiOperation("开账户")
     @GetMapping("open-account")
-    public AccountResponse<Account> openAccount(@RequestParam("objectNo") String objectNo,
-                                                @RequestParam("accountTypeCode") int accountTypeCode) {
-        return AccountResponse.success(accountEngine.openAccount(objectNo, accountTypeCode));
+    public Response<Account> openAccount(@RequestParam("objectNo") String objectNo,
+                                         @RequestParam("accountTypeCode") int accountTypeCode) {
+        return Response.success(accountEngine.openAccount(objectNo, accountTypeCode));
     }
 
     @ApiOperation("账户转账")
     @PostMapping("transfer-account")
-    public AccountResponse<String> transfer(@RequestBody AccountTransferReq transferReq) {
-        return AccountResponse.success(accountEngine.transfer(transferReq));
+    public Response<String> transfer(@RequestBody AccountTransferReq transferReq) {
+        return Response.success(accountEngine.transfer(transferReq));
     }
 
     @ApiOperation("查询账务流水")
     @PostMapping("query-account-flow")
-    public AccountResponse<List<AccountFlow>> queryAccountFlow(@RequestParam("accountNo") String accountNo) {
-        return AccountResponse.success(accountFlowService.queryAccountFlow(accountNo));
+    public Response<List<AccountFlow>> queryAccountFlow(@RequestParam("accountNo") String accountNo) {
+        return Response.success(accountFlowService.queryAccountFlow(accountNo));
     }
 }
