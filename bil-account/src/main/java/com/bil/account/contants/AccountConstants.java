@@ -34,6 +34,7 @@ public interface AccountConstants {
         BANK_LOAD(210001, "银行贷款户", AccountingSubject.BANK_LOAN),
         PERSONAL_LOAD(210002, "个人借款户", AccountingSubject.PERSONAL_LOAD),
         CMB_BANK_LOAD(210003, "招商银行贷款户", AccountingSubject.BANK_LOAN),
+        ALI_MY_BANK_LOAD(210004, "支付宝网商贷贷款户", AccountingSubject.BANK_LOAN),
 
         /**
          * 所有者权益类账户

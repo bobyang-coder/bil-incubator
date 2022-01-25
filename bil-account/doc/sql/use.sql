@@ -31,3 +31,7 @@ where f.account_no = '100001000000bozige210002';
 
 # 查询资产和负债
 select * FROM ACCOUNT where account_type like '1%' or account_type like '2%';
+
+
+# 统计时间段内借贷金额
+select account_no as accountNo,sum(credit_amount) as cAmount,sum(debit_amount) as dAmount FROM ACCOUNT_FLOW where trade_time >='2021-01-01 00:00:00' and trade_time <'2022-01-01 00:00:00' group by account_no;

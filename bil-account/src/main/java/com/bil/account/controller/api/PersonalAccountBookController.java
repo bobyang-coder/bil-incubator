@@ -7,6 +7,7 @@ import com.bil.account.model.param.AccountTransferReq;
 import com.bil.account.model.param.PersonalBookkeepingReq;
 import com.bil.account.utils.BookkeepingUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +31,7 @@ public class PersonalAccountBookController {
     @Resource
     private AccountEngine accountEngine;
 
-    /**
-     * 导入记账
-     */
+    @ApiOperation("导入记账")
     @GetMapping("export-bookkeeping")
     public void exportBookkeeping() {
         File file = new File("/Users/bob/bozige.xls");

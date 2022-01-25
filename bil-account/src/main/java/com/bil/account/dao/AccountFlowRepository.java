@@ -1,7 +1,10 @@
 package com.bil.account.dao;
 
+import com.bil.account.model.chart.AccountDcData;
 import com.bil.account.model.entity.AccountFlow;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -20,5 +23,11 @@ public interface AccountFlowRepository extends JpaRepository<AccountFlow, Long> 
      * @return
      */
     List<AccountFlow> queryByAccountNoOrderByIdDesc(String accountNo);
+
+    @Modifying
+    @Query("select new com.bil.account.model.chart.AccountDcData(accountNo,sum(debitAmount) ,sum(creditAmount)) FROM AccountFlow group by accountNo")
+//    @Query("select new com.bil.account.model.chart.AccountDcData(accountNo,sum(debitAmount) ,sum(creditAmount)) FROM AccountFlow" +
+//            " where tradeTime >='2021-01-01 00:00:00' and tradeTime <'2022-01-01 00:00:00' group by accountNo")
+    List<AccountDcData> queryAccountDcData();
 
 }

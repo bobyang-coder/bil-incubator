@@ -22,4 +22,8 @@ public class AccountService {
     public List<Account> queryByObjectNo(String objectNo) {
         return accountRepository.queryByObjectNo(objectNo);
     }
+
+    public Account findByAccountNo(String accountNo) {
+        return accountRepository.findByAccountNo(accountNo);
+    }
 }

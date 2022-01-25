@@ -29,6 +29,7 @@ public interface BookConstants {
         CMB_BANK_LOAD("103", "招商闪电贷", AccountType.DEPOSIT, AccountType.CMB_BANK_LOAD),
         PERSONAL_LOAD("104", "个人借款", AccountType.DEPOSIT, AccountType.PERSONAL_LOAD),
         CMB_CREDIT_PAYMENT_RETURN("105", "招商信用卡代付归还", AccountType.DEPOSIT, AccountType.CMB_CREDIT_CONSUMPTION),
+        ALI_MY_BANK_LOAD("106", "支付宝网商贷", AccountType.DEPOSIT, AccountType.ALI_MY_BANK_LOAD),
 
         /**
          * 资产消耗
@@ -40,6 +41,7 @@ public interface BookConstants {
         CMB_BANK_LOAD_REPAYMENT("205", "招商闪电贷还款", AccountType.CMB_BANK_LOAD, AccountType.DEPOSIT),
         DAILY_EXPENSES("206", "日常消费", AccountType.DAILY_EXPENSES, AccountType.DEPOSIT),
         PERSONAL_LOAD_RETURN("207", "个人借款还款", AccountType.PERSONAL_LOAD, AccountType.DEPOSIT),
+        ALI_MY_BANK_LOAD_RETURN("208", "支付宝网商贷还款", AccountType.ALI_MY_BANK_LOAD, AccountType.DEPOSIT),
         ;
 
         private String code;

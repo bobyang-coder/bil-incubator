@@ -1,6 +1,7 @@
 package com.bil.account.service;
 
 import com.bil.account.dao.AccountFlowRepository;
+import com.bil.account.model.chart.AccountDcData;
 import com.bil.account.model.entity.AccountFlow;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,14 @@ public class AccountFlowService {
      */
     public List<AccountFlow> queryAccountFlow(String accountNo) {
         return accountFlowRepository.queryByAccountNoOrderByIdDesc(accountNo);
+    }
+
+    /**
+     * 查询账户借贷金额
+     *
+     * @return
+     */
+    public List<AccountDcData> queryAccountDcData() {
+        return accountFlowRepository.queryAccountDcData();
     }
 }
