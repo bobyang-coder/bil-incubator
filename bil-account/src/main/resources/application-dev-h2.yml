@@ -36,6 +36,7 @@ spring:
         - optional:/h2/schema/account_flow.sql
         - optional:/h2/schema/account_voucher.sql
         - optional:/h2/schema/account_command.sql
+        - optional:/h2/schema/blood_relationship.sql
       mode: embedded
       data-locations:
         - optional:/h2/data/init_data.sql

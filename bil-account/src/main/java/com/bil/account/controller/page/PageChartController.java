@@ -123,6 +123,12 @@ public class PageChartController {
         return "chart/account-dc-account-pie-chart";
     }
 
+    @ApiOperation("查询血缘关系")
+    @GetMapping("query-blood-relationship-data")
+    public String queryBloodRelationshipData() {
+        return "chart/blood_relationship";
+    }
+
     public LineChartData buildLineChartData(Account account) {
         AccountType type = AccountType.findByCode(account.getAccountType());
         Assert.notNull(type, "账户类型非法");
