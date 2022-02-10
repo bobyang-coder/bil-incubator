@@ -2,6 +2,7 @@ package com.bil.account.controller.api;
 
 import com.alibaba.excel.EasyExcel;
 import com.bil.account.dao.BloodRelationshipRepository;
+import com.bil.account.model.base.Response;
 import com.bil.account.model.chart.BloodRelationshipData;
 import com.bil.account.model.entity.BloodRelationship;
 import com.bil.account.model.param.BloodRelationshipExportVo;
@@ -10,11 +11,13 @@ import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,13 +38,13 @@ public class BloodRelationshipController {
     private BloodRelationshipRepository bloodRelationshipRepository;
 
     @ApiOperation("导入血缘关系")
-    @GetMapping("export-bookkeeping")
-    public void export() {
-        File file = new File("/Users/bob/Documents/workspace/github/bil-incubator/bil-account/doc/blood_relationship/血缘关系-模板.xlsx");
-        List<BloodRelationshipExportVo> reqList = EasyExcel.read(file, BloodRelationshipExportVo.class, null)
+    @PostMapping("export")
+    public Response<Void> export(MultipartFile file) throws IOException {
+        List<BloodRelationshipExportVo> reqList = EasyExcel.read(file.getInputStream(), BloodRelationshipExportVo.class, null)
                 .doReadAllSync();
         List<BloodRelationship> list = reqList.stream().map(BloodRelationshipExportVo::to).collect(Collectors.toList());
         bloodRelationshipRepository.saveAll(list);
+        return Response.OK();
     }
 
     @ApiOperation("查询血缘关系")
