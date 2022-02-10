@@ -31,6 +31,9 @@ public class AmountUtils {
      * @return
      */
     public static String fen2Yuan(Long yuan) {
+        if (null == yuan) {
+            return "0";
+        }
         return new BigDecimal(yuan).divide(B_100, 2, RoundingMode.UNNECESSARY).toString();
     }
 

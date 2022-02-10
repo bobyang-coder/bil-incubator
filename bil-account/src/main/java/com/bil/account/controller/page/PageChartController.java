@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -105,18 +106,19 @@ public class PageChartController {
     @ApiOperation("查询账户借贷金额")
     @GetMapping("query-account-dc-amount")
     public String queryAccountDcData(Model model) {
-        Collection<AccountDcData> list = CollectionUtils.emptyIfNull(accountFlowService.queryAccountDcData());
-        List<PieChart> dataList = list.stream().map(e -> {
-            Account account = accountService.findByAccountNo(e.getAccountNo());
-            return PieChart.builder()
-                    .titleName(account.getAccountName())
-                    .dataList(
-                            Lists.newArrayList(
-                                    PieChartData.builder().name("借").value(fen2Yuan(e.getDAmount())).build(),
-                                    PieChartData.builder().name("贷").value(fen2Yuan(e.getCAmount())).build()
-                            )
-                    ).build();
-        }).collect(Collectors.toList());
+        List<AccountDcData> list = accountFlowService.queryAccountDcData();
+        List<PieChart> dataList = AccountDcData.toPieChart(list);
+        model.addAttribute("dataList", JSON.toJSONString(dataList));
+        return "chart/account-dc-account-pie-chart";
+    }
+
+    @ApiOperation("查询账户借贷金额(统计指定年份)")
+    @GetMapping("query-account-dc-amount-by-year")
+    public String queryAccountDcDataByYear(Model model,
+                                           @RequestParam("fromYear") String fromYear,
+                                           @RequestParam("toYear") String toYear) {
+        List<AccountDcData> list = accountFlowService.sumAccountDcData(BookkeepingUtils.OBJECT_NO, fromYear, toYear);
+        List<PieChart> dataList = AccountDcData.toPieChart(list);
         model.addAttribute("dataList", JSON.toJSONString(dataList));
         return "chart/account-dc-account-pie-chart";
     }

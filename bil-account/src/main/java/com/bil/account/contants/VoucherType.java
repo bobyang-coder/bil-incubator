@@ -14,13 +14,17 @@ import java.util.Objects;
 @Getter
 public enum VoucherType {
 
+
+
     /**
      * ......
      */
-    ACCOUNT_NO("100001", "账户号"),
-    ACCOUNT_VOUCHER("100002", "账务凭证"),
-    BEGIN_INPUT("100003", "期初录入"),
-    ;
+    ACCOUNT_NO("100001","账户号"),
+
+    ACCOUNT_VOUCHER("100002","账务凭证"),
+
+    BEGIN_INPUT("100003","期初录入"),
+            ;
 
     private String code;
 

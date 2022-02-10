@@ -24,6 +24,9 @@ public class Response<T> {
     private String msg;
     private T data;
 
+    public static <D> Response<D> OK() {
+        return success(null);
+    }
 
     public static <D> Response<D> success(D data) {
         return Response.<D>builder()

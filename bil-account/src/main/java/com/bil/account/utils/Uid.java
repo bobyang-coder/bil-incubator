@@ -74,4 +74,8 @@ public class Uid {
         }
         return str;
     }
+
+    public static String removeLeft(String str, String removeStr) {
+        return str.replaceAll("^(" + removeStr + "+)", "");
+    }
 }

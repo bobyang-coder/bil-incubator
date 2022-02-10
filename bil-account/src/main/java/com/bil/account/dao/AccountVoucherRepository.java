@@ -11,4 +11,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface AccountVoucherRepository extends JpaRepository<AccountVoucher, Long> {
 
+    /**
+     * 根据from对象号删除
+     *
+     * @param fromObjectNo
+     * @return
+     */
+    int deleteAccountVouchersByFromObjectNo(String fromObjectNo);
 }

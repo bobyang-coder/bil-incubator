@@ -33,6 +33,14 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     List<Account> queryByObjectNo(String objectNo);
 
     /**
+     * 根据对象号删除
+     *
+     * @param objectNo
+     * @return
+     */
+    int deleteAccountsByObjectNo(String objectNo);
+
+    /**
      * 查询余额
      *
      * @param accountNo
@@ -61,4 +69,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     @Modifying
     @Query("update Account set balance = balance - :amount  where accountNo = :accountNo")
     int subAmountSupportNegative(@Param("amount") Long amount, @Param("accountNo") String accountNo);
+
 }

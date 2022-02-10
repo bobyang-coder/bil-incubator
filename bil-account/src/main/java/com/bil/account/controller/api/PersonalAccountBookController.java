@@ -1,20 +1,17 @@
 package com.bil.account.controller.api;
 
-import com.alibaba.excel.EasyExcel;
-import com.bil.account.contants.BookConstants.BookkeepingType;
-import com.bil.account.engine.AccountEngine;
-import com.bil.account.model.param.AccountTransferReq;
-import com.bil.account.model.param.PersonalBookkeepingReq;
-import com.bil.account.utils.BookkeepingUtils;
+import com.bil.account.biz.AccountBookBiz;
+import com.bil.account.model.base.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.util.List;
+import java.io.IOException;
 
 /**
  * 个人账本账户相关接口
@@ -29,19 +26,20 @@ import java.util.List;
 public class PersonalAccountBookController {
 
     @Resource
-    private AccountEngine accountEngine;
+    private AccountBookBiz accountBookBiz;
+
 
     @ApiOperation("导入记账")
-    @GetMapping("export-bookkeeping")
-    public void exportBookkeeping() {
-        File file = new File("/Users/bob/bozige.xls");
-        List<PersonalBookkeepingReq> reqList = EasyExcel.read(file, PersonalBookkeepingReq.class, null)
-                .doReadAllSync();
-        for (PersonalBookkeepingReq req : reqList) {
-            BookkeepingType bookkeepingType = BookkeepingType.findByCode(req.getBookkeepingType());
-            AccountTransferReq transferReq = BookkeepingUtils.build(req.getTradeDate(), bookkeepingType.getD(),
-                    bookkeepingType.getC(), req.getAmount(), req.getNote());
-            accountEngine.transfer(transferReq);
-        }
+    @PostMapping("export-bookkeeping")
+    public Response<Void> exportBookkeeping(MultipartFile file) throws IOException {
+        accountBookBiz.exportBookkeeping(file.getInputStream());
+        return Response.OK();
+    }
+
+    @ApiOperation("一键清理账本")
+    @GetMapping("clear-bookkeeping")
+    public Response<Void> clearBookkeeping() {
+        accountBookBiz.clearBookkeeping();
+        return Response.OK();
     }
 }

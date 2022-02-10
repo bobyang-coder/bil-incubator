@@ -6,10 +6,10 @@
 </head>
 <body>
 <table>
+    <thead>
+    功能列表
+    </thead>
     <tbody>
-    <tr>
-        <td><a href="/personal-account-book/export-bookkeeping">导入记账</a></td>
-    </tr>
     <tr>
         <td><a href="/chart/account-flow-change-chart">查询账户流水变化图表</a></td>
     </tr>
@@ -18,6 +18,22 @@
     </tr>
     <tr>
         <td><a href="/chart/query-account-dc-amount">查询账户借贷金额</a></td>
+    </tr>
+    <tr>
+        <td><a href="/chart/query-account-dc-amount-by-year?fromYear=2021&toYear=2021">查询账户借贷金额(统计指定年份)</a></td>
+    </tr>
+
+    <tr>
+        <td>
+            <form id="upload-bookkeeping-form" action="/personal-account-book/export-bookkeeping" method="post"
+                  enctype="multipart/form-data">
+                <a href="/">上传个人账本:</a>
+                <input type="file" name="file" onchange="this.form.submit()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td><a href="/personal-account-book/clear-bookkeeping">一键清理账本</a></td>
     </tr>
     </tbody>
 </table>
