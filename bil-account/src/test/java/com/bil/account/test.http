@@ -1,294 +1,30 @@
 ###
-GET http://localhost:8888/account/find-account?accountNo=110110001
+POST http://localhost:8888/account/find-account
+Content-Type: application/json
+
+{
+  "sign": "bozige",
+  "encryptData": "110110001",
+  "timestamp": "110110001"
+}
 
 ###
 GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=110003
+
 ###
 GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=310001
+
 ###
 GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=210001
+
 ###
 GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=210002
+
 ###
 GET http://localhost:8888/account/open-account?objectNo=110&accountTypeCode=410001
 
 ###
 POST http://localhost:8888/account/query-account-flow?accountNo=100001000000000110110003
-
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "310001",
-  "amount": 9000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-001",
-  "tradeTime": "2021-11-12 23:00:00",
-  "tradeType": "pay",
-  "note": "工资剩余9K"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "210002",
-  "amount": 30000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-002",
-  "tradeTime": "2021-11-15 10:00:00",
-  "tradeType": "pay",
-  "note": "个人借款3w"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "410001",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 30000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-003",
-  "tradeTime": "2021-11-15 13:00:00",
-  "tradeType": "pay",
-  "note": "还小额贷3w"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "310001",
-  "amount": 22000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-004",
-  "tradeTime": "2021-12-12 23:00:00",
-  "tradeType": "pay",
-  "note": "2021.11月份工资2.2K"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "210001",
-  "amount": 30000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-005",
-  "tradeTime": "2021-12-15 10:00:00",
-  "tradeType": "pay",
-  "note": "银行借款3w"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "410001",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 58000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-006",
-  "tradeTime": "2021-12-15 13:00:00",
-  "tradeType": "pay",
-  "note": "2021.12月份还小额贷5.8w"
-}
-
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "310001",
-  "amount": 32000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-007",
-  "tradeTime": "2022-01-12 16:00:00",
-  "tradeType": "pay",
-  "note": "2021.12月份工资3.2w"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "210001",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 30000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-008",
-  "tradeTime": "2022-01-12 22:30:00",
-  "tradeType": "pay",
-  "note": "还银行贷款3w"
-}
-
-###
-#POST http://localhost:8888/account/transfer-account
-#Content-Type: application/json
-#
-#{
-#  "fromObjectNo": "110",
-#  "fromAccountType": "110003",
-#  "toObjectNo": "110",
-#  "toAccountType": "210001",
-#  "amount": 5000,
-#  "transferType": "3",
-#  "commandType": "from-to",
-#  "tradeNo": "bob-test-009",
-#  "tradeTime": "2021-12-15 10:00:00",
-#  "tradeType": "pay",
-#  "note": "银行借款5k"
-#}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "410001",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 4200,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-010",
-  "tradeTime": "2022-01-27 10:30:00",
-  "tradeType": "pay",
-  "note": "房贷4.2k"
-}
-
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "310001",
-  "amount": 25000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-011",
-  "tradeTime": "2022-01-28 16:00:00",
-  "tradeType": "pay",
-  "note": "2021年终2.5w"
-}
-
-
-###
-#POST http://localhost:8888/account/transfer-account
-#Content-Type: application/json
-#
-#{
-#  "fromObjectNo": "110",
-#  "fromAccountType": "210001",
-#  "toObjectNo": "110",
-#  "toAccountType": "110003",
-#  "amount": 5000,
-#  "transferType": "3",
-#  "commandType": "from-to",
-#  "tradeNo": "bob-test-012",
-#  "tradeTime": "2022-01-28 17:00:00",
-#  "tradeType": "pay",
-#  "note": "还银行贷款5k"
-#}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "210002",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 10000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-013",
-  "tradeTime": "2022-01-28 22:30:00",
-  "tradeType": "pay",
-  "note": "还个人借款1w"
-}
-
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "110003",
-  "toObjectNo": "110",
-  "toAccountType": "310001",
-  "amount": 22000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-014",
-  "tradeTime": "2022-02-12 16:00:00",
-  "tradeType": "pay",
-  "note": "2022.1月工资2.2w"
-}
-
-###
-POST http://localhost:8888/account/transfer-account
-Content-Type: application/json
-
-{
-  "fromObjectNo": "110",
-  "fromAccountType": "210002",
-  "toObjectNo": "110",
-  "toAccountType": "110003",
-  "amount": 20000,
-  "transferType": "3",
-  "commandType": "from-to",
-  "tradeNo": "bob-test-015",
-  "tradeTime": "2022-02-12 20:30:00",
-  "tradeType": "pay",
-  "note": "还个人借款2w"
-}
 
 ### 导入个人账本
 

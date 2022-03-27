@@ -1,11 +1,13 @@
 package com.bil.account.controller.api;
 
 import com.bil.account.engine.AccountEngine;
+import com.bil.account.model.base.EncryptReq;
 import com.bil.account.model.base.Response;
 import com.bil.account.model.entity.Account;
 import com.bil.account.model.entity.AccountFlow;
 import com.bil.account.model.param.AccountTransferReq;
 import com.bil.account.service.AccountFlowService;
+import com.bil.account.utils.des.Decryptable;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,9 @@ public class AccountController {
     private AccountFlowService accountFlowService;
 
     @ApiOperation("查询账户")
-    @GetMapping("find-account")
-    public Response<Account> findAccount(@RequestParam("accountNo") String accountNo) {
-        return Response.success(accountEngine.findAccount(accountNo));
+    @PostMapping("find-account")
+    public Response<Account> findAccount(@Decryptable EncryptReq<String> accountNo) {
+        return Response.success(accountEngine.findAccount(accountNo.getData()));
     }
 
     @ApiOperation("开账户")
